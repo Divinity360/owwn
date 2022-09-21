@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:owwn_coding_challenge/screens/start_page.dart';
+import 'package:owwn_coding_challenge/utils/router.dart';
+import 'package:owwn_coding_challenge/utils/theme.dart';
 
 void main() {
   runApp(const MyApp());
@@ -9,61 +12,14 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return MaterialApp.router(
       title: 'Flutter Coding Challenge',
-      darkTheme: ThemeData.dark(),
+      darkTheme: AppThemeData.darkTheme(),
       themeMode: ThemeMode.dark,
-      home: const FirstPage(),
     );
   }
 }
 
-class FirstPage extends StatelessWidget {
-  const FirstPage({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: Center(
-        child: Transform.translate(
-          offset: const Offset(0, -68),
-          child: SizedBox.square(
-            dimension: 136,
-            child: GestureDetector(
-              behavior: HitTestBehavior.opaque,
-              onTap: () => Navigator.of(context).pushReplacement(
-                MaterialPageRoute(
-                  builder: (context) {
-                    return const SecondPage();
-                  },
-                ),
-              ),
-              child: const DecoratedBox(
-                decoration: BoxDecoration(
-                  gradient: RadialGradient(
-                    colors: [
-                      Colors.white,
-                      Colors.transparent,
-                    ],
-                    stops: [.8, 1],
-                  ),
-                ),
-                child: Center(
-                  child: Text(
-                    'Press to start',
-                    style: TextStyle(
-                      color: Colors.black,
-                    ),
-                  ),
-                ),
-              ),
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-}
 
 class SecondPage extends StatelessWidget {
   const SecondPage({super.key});
