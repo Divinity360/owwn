@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:owwn_coding_challenge/main.dart';
+import 'package:go_router/go_router.dart';
+import 'package:owwn_coding_challenge/utils/router.dart';
 import 'package:owwn_coding_challenge/widgets/buttons/start_button.dart';
 
 class StartPage extends StatelessWidget {
@@ -12,13 +13,7 @@ class StartPage extends StatelessWidget {
         child: Transform.translate(
           offset: const Offset(0, -68),
           child: StartButton(
-                onTap: () => Navigator.of(context).pushReplacement(
-                      MaterialPageRoute(
-                        builder: (context) {
-                          return const SecondPage();
-                        },
-                      ),
-                    ),),
+                onTap: () => context.go(AppRouter.login),),
         ),
       ),
     );

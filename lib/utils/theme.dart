@@ -14,12 +14,16 @@ class AppThemeData {
       appBarTheme: appBarTheme,
       fontFamily: 'Roboto',
       textTheme: ThemeData.dark().textTheme.copyWith(
+            headline1: headlineOneTextStyle,
             headline3: headlineThreeTextStyle,
           ),
     );
   }
 
   /// Application Text themes
+
+  static final TextStyle headlineOneTextStyle =
+      TextStyle(fontSize: 31, letterSpacing: 0.5, fontWeight: FontWeight.w400, color: AppColors.white);
 
   static final TextStyle headlineThreeTextStyle = TextStyle(
     fontFamily: 'DMSerifDisplay',

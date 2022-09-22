@@ -1,10 +1,24 @@
 import 'package:flutter/material.dart';
-import 'package:owwn_coding_challenge/screens/start_page.dart';
+import 'package:owwn_coding_challenge/providers/auth/auth_provider.dart';
+import 'package:owwn_coding_challenge/providers/pages/login_page_provider.dart';
 import 'package:owwn_coding_challenge/utils/router.dart';
 import 'package:owwn_coding_challenge/utils/theme.dart';
+import 'package:provider/provider.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider<AuthProvider>(
+          create: (context) => AuthProvider(),
+        ),
+        ChangeNotifierProvider<LoginPageProvider>(
+          create: (context) => LoginPageProvider(),
+        ),
+      ],
+      child: const MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -16,10 +30,10 @@ class MyApp extends StatelessWidget {
       title: 'Flutter Coding Challenge',
       darkTheme: AppThemeData.darkTheme(),
       themeMode: ThemeMode.dark,
+      routerConfig: AppRouter.routerConfig,
     );
   }
 }
-
 
 class SecondPage extends StatelessWidget {
   const SecondPage({super.key});
