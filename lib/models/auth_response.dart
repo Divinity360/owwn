@@ -4,9 +4,9 @@ class AuthResponse {
 
   AuthResponse({this.accessToken, this.refreshToken});
 
-  AuthResponse.fromJson(Map<String, String> json) {
-    accessToken = json['access_token'];
-    refreshToken = json['refresh_token'];
+  AuthResponse.fromJson(Map json) {
+    accessToken = json['access_token'] as String;
+    refreshToken = json['refresh_token'] as String;
   }
 
   Map<String, dynamic> toJson() {
