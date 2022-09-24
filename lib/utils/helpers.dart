@@ -1,6 +1,6 @@
-import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:owwn_coding_challenge/utils/colors.dart';
+import 'package:owwn_coding_challenge/widgets/cards/user_item_card.dart';
 
 class AppHelpers {
   AppHelpers._();
@@ -9,7 +9,8 @@ class AppHelpers {
     Fluttertoast.showToast(
       msg: message,
       gravity: ToastGravity.TOP,
-      backgroundColor: AppColors.red
+      backgroundColor: AppColors.red,
     );
   }
+
 }

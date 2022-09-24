@@ -15,8 +15,10 @@ class AppThemeData {
       fontFamily: 'Roboto',
       textTheme: ThemeData.dark().textTheme.copyWith(
             headline1: headlineOneTextStyle,
+            headline2: headlineTwoTextStyle,
             headline3: headlineThreeTextStyle,
             headline4: headlineFourTextStyle,
+            headline5: headlineFiveTextStyle,
             button: buttonTextStyle,
           ),
     );
@@ -39,6 +41,18 @@ class AppThemeData {
   static final TextStyle headlineFourTextStyle = TextStyle(
     color: AppColors.white,
     fontSize: 18.0,
+    fontWeight: FontWeight.w400,
+  );
+
+  static final TextStyle headlineFiveTextStyle = TextStyle(
+    color: AppColors.white,
+    fontSize: 15.0,
+    fontWeight: FontWeight.w400,
+  );
+
+  static final TextStyle headlineTwoTextStyle = TextStyle(
+    color: AppColors.white,
+    fontSize: 21.0,
     fontWeight: FontWeight.w400,
   );
 

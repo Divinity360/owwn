@@ -10,7 +10,7 @@ class OverlappingAppBarProvider extends ChangeNotifier {
   final double _minAppbarHeight = 56.0;
 
   /// Minimum scroll sheet content ratio
-  final double _bodyContentRatioMin = .6;
+  final double _bodyContentRatioMin = .67;
 
   /// Maximum scroll sheet content ratio
   final double _bodyContentRatioMax = 1.0;

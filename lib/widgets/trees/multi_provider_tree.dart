@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:owwn_coding_challenge/providers/auth/auth_provider.dart';
 import 'package:owwn_coding_challenge/providers/pages/login_page_provider.dart';
+import 'package:owwn_coding_challenge/providers/pages/user_list_page_provider.dart';
 import 'package:owwn_coding_challenge/providers/widgets/overlapping_appbar_provider.dart';
 import 'package:provider/provider.dart';
 
@@ -16,12 +16,12 @@ class MultiProviderTree extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider<AuthProvider>(
-          create: (context) => AuthProvider(),
-        ),
         ChangeNotifierProvider<LoginPageProvider>(
           create: (context) => LoginPageProvider(),
-        )
+        ),
+        ChangeNotifierProvider<UserListPageProvider>(
+          create: (context) => UserListPageProvider(),
+        ),
       ],
       child: child,
     );
