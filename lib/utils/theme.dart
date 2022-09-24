@@ -22,7 +22,7 @@ class AppThemeData {
     );
   }
 
-  /// Application Text themes
+  /// Application Text styles
 
   static final TextStyle headlineOneTextStyle = TextStyle(
     fontSize: 31,
@@ -42,7 +42,7 @@ class AppThemeData {
     fontWeight: FontWeight.w400,
   );
 
-  /// Application Button theme
+  /// Application Button styles
 
   static final TextStyle buttonTextStyle = TextStyle(
     color: AppColors.white,

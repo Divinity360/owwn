@@ -25,14 +25,14 @@ class LoginPageProvider extends ChangeNotifier {
     final authProvider = Provider.of<AuthProvider>(context, listen: false);
     final response = await ApiService.requestAuthTokens(emailController.text);
     if (response.data != null) {
-      final AuthResponse authResponse = response.data as AuthResponse;
+      final authResponse = response.data as AuthResponse;
       await authProvider.saveAccessToken(authResponse.accessToken!);
       await authProvider.saveRefreshToken(authResponse.refreshToken!);
-      router.go(AppRouter.start);
+      router.go(AppRouter.home);
     } else {
       AppHelpers.toastMessage('Invalid login credentials');
     }
-    emailController.clear();
+    // emailController.clear();
     loading = false;
 
   }
