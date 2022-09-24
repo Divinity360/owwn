@@ -1,22 +1,25 @@
 import 'package:flutter/material.dart';
+import 'package:owwn_coding_challenge/models/user.dart';
+import 'package:owwn_coding_challenge/utils/extensions.dart';
 import 'package:owwn_coding_challenge/utils/colors.dart';
+import 'package:owwn_coding_challenge/widgets/avatars/user_card_avatar.dart';
 
 enum UserCardPosition { start, middle, last }
 
 class UserListItemCard extends StatelessWidget {
   const UserListItemCard({
     Key? key,
-    required this.index,
+    required this.user,
     this.position = UserCardPosition.middle,
   }) : super(key: key);
 
-  final int index;
+  final Users user;
   final UserCardPosition position;
 
   @override
   Widget build(BuildContext context) {
     final _screenWidth = MediaQuery.of(context).size.width;
-    final _textTheme = Theme.of(context).textTheme;
+
     return Container(
       height: 62,
       margin: const EdgeInsets.only(bottom: 2),
@@ -37,28 +40,14 @@ class UserListItemCard extends StatelessWidget {
       ),
       child: Row(
         children: [
-          Container(
-            margin: const EdgeInsets.only(left: 10, right: 17),
-            height: 45,
-            width: 45,
-            decoration: BoxDecoration(
-              color: AppColors.onyx,
-              shape: BoxShape.circle,
-            ),
-            child: Center(
-              child: Text(
-                'UN',
-                style: _textTheme.headline5,
-              ),
-            ),
-          ),
+          UserCardAvatar(initials: user.name!.toInitials),
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Padding(
                 padding: const EdgeInsets.only(top: 10),
                 child: Text(
-                  'User Name',
+                  user.name!,
                   style: TextStyle(
                     color: AppColors.white,
                     fontSize: 18.0,
@@ -67,7 +56,7 @@ class UserListItemCard extends StatelessWidget {
                 ),
               ),
               Text(
-                'useremail@domain.com',
+                user.email ?? 'unknown email',
                 style: TextStyle(
                   color: AppColors.silver,
                   fontSize: 15.0,
@@ -81,3 +70,4 @@ class UserListItemCard extends StatelessWidget {
     );
   }
 }
+

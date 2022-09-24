@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:owwn_coding_challenge/models/auth_response.dart';
-import 'package:owwn_coding_challenge/services/api_service.dart';
+import 'package:owwn_coding_challenge/services/api/api_service.dart';
+import 'package:owwn_coding_challenge/services/storage/storage_service.dart';
 import 'package:owwn_coding_challenge/utils/helpers.dart';
 import 'package:owwn_coding_challenge/utils/router.dart';
-import 'package:owwn_coding_challenge/utils/storage.dart';
 
 class LoginPageProvider extends ChangeNotifier {
   bool _loading = false;
@@ -26,7 +26,7 @@ class LoginPageProvider extends ChangeNotifier {
       final authResponse = response.data as AuthResponse;
       await AppSecureStorage.saveAccessToken(authResponse.accessToken!);
       await AppSecureStorage.saveRefreshToken(authResponse.refreshToken!);
-      router.go(AppRouter.home);
+      router.push(AppRouter.home);
     } else {
       AppHelpers.toastMessage('Invalid login credentials');
     }

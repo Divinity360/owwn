@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:owwn_coding_challenge/models/user.dart';
-import 'package:owwn_coding_challenge/utils/colors.dart';
-import 'package:owwn_coding_challenge/widgets/cards/user_item_card.dart';
+import 'package:owwn_coding_challenge/providers/pages/user_list_page_provider.dart';
+import 'package:owwn_coding_challenge/widgets/backgrounds/linear_gradient_background.dart';
 import 'package:owwn_coding_challenge/widgets/listviews/overlapping_appbar_listview.dart';
+import 'package:owwn_coding_challenge/widgets/loader/app_loader.dart';
 import 'package:owwn_coding_challenge/widgets/sections/user_list_section.dart';
+import 'package:provider/provider.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -12,32 +13,48 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   @override
+  void initState() {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      final _userListPageProvider =
+          Provider.of<UserListPageProvider>(context, listen: false);
+      _userListPageProvider.init();
+    });
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    final _screenWidth = MediaQuery.of(context).size.width;
     return Scaffold(
       body: OverlappingAppBarListView(
-        viewChild: Container(
-          padding: const EdgeInsets.symmetric(horizontal: 10),
-          decoration: const BoxDecoration(
-            gradient: LinearGradient(
-              begin: Alignment.bottomCenter,
-              end: Alignment.topCenter,
-              colors: [
-                Colors.black,
-                Colors.transparent,
-              ],
-              stops: [.8, 1],
-            ),
+        viewChild: LinearGradientBackground(
+          child: Consumer<UserListPageProvider>(
+            builder: (context, provider, child) {
+              return Column(
+                children: [
+                  if (provider.loading == true &&
+                      provider.nestedUsersList.isEmpty)
+                    const Padding(
+                      padding: EdgeInsets.all(100),
+                      child: AppLoader(),
+                    )
+                  else
+                    ListView.builder(
+                      itemCount: provider.nestedUsersList.length,
+                      shrinkWrap: true,
+                      padding: const EdgeInsets.symmetric(vertical: 10),
+                      physics: const NeverScrollableScrollPhysics(),
+                      itemBuilder: (context, index) {
+                        return SectionedUserList(
+                          userList: provider.nestedUsersList.elementAt(index),
+                        );
+                      },
+                    )
+                ],
+              );
+            },
           ),
-          width: _screenWidth,
-          child: Column(children: const [
-            SectionedUserList(isActive: true, userList: []),
-            SectionedUserList(isActive: false, userList: []),
-          ],) ,
         ),
       ),
     );
   }
 }
-
-

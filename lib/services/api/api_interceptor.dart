@@ -1,10 +1,12 @@
-import 'package:http_interceptor/http_interceptor.dart';
+import 'dart:developer';
+
 import 'package:go_router/go_router.dart';
+import 'package:http_interceptor/http_interceptor.dart';
 import 'package:owwn_coding_challenge/models/auth_response.dart';
-import 'package:owwn_coding_challenge/services/api_service.dart';
+import 'package:owwn_coding_challenge/services/api/api_service.dart';
+import 'package:owwn_coding_challenge/services/storage/storage_service.dart';
 import 'package:owwn_coding_challenge/utils/constants.dart';
 import 'package:owwn_coding_challenge/utils/router.dart';
-import 'package:owwn_coding_challenge/utils/storage.dart';
 
 /// API Service interceptor class
 class ApiInterceptor implements InterceptorContract {
@@ -18,11 +20,12 @@ class ApiInterceptor implements InterceptorContract {
       data.headers['X-API-KEY'] = AppConstants.apiKey;
 
       if (requestUrl != AppConstants.authUrl) {
-        final accessToken = await AppSecureStorage.readRefreshToken();
+        final accessToken = await AppSecureStorage.readAccessToken();
         if (accessToken != null) {
           data.headers['authorization'] = 'Bearer $accessToken';
         }
       }
+      log('REQUEST DATA $data');
     } catch (e) {
       print(e);
     }
@@ -32,6 +35,7 @@ class ApiInterceptor implements InterceptorContract {
 
   @override
   Future<ResponseData> interceptResponse({required ResponseData data}) async {
+    log('RESPONSE DATA $data');
     return data;
   }
 }

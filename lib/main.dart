@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:owwn_coding_challenge/utils/router.dart';
-import 'package:owwn_coding_challenge/utils/storage.dart';
+import 'package:owwn_coding_challenge/services/storage/storage_service.dart';
 import 'package:owwn_coding_challenge/utils/theme.dart';
 import 'package:owwn_coding_challenge/widgets/trees/multi_provider_tree.dart';
 

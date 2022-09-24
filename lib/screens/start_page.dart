@@ -13,7 +13,7 @@ class StartPage extends StatelessWidget {
         child: Transform.translate(
           offset: const Offset(0, -68),
           child: StartButton(
-                onTap: () => context.go(AppRouter.login),),
+                onTap: () => context.push(AppRouter.login),),
         ),
       ),
     );

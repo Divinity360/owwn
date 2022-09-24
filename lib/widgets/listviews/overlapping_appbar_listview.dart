@@ -23,13 +23,12 @@ class OverlappingAppBarListView extends StatelessWidget {
           return Stack(
             children: <Widget>[
               Stack(children: [
-                 Image.network(
-                    'http://s3.amazonaws.com/dmaunited/news/19AW_ECOM_MF_SP_Select_KarlLagerfeld_ComingSoonHero_Desktop_1440x500_2-A.jpg?mtime=20191009173305',
-                    height: provider.appBarImageHeight,
-                    width: _screenWidth,
-                    fit: BoxFit.cover,
-                  ),
-
+                Image.network(
+                  'http://s3.amazonaws.com/dmaunited/news/19AW_ECOM_MF_SP_Select_KarlLagerfeld_ComingSoonHero_Desktop_1440x500_2-A.jpg?mtime=20191009173305',
+                  height: provider.appBarImageHeight,
+                  width: _screenWidth,
+                  fit: BoxFit.cover,
+                ),
                 NotificationListener<DraggableScrollableNotification>(
                   onNotification: provider.onScrollEvent,
                   child: Stack(
@@ -55,14 +54,14 @@ class OverlappingAppBarListView extends StatelessWidget {
                 right: 0.0,
                 top: 0.0,
                 child: AppBar(
-                  backgroundColor: provider.isMinimumAppBarHeight ? Colors.black :Colors.transparent ,
+                  backgroundColor: provider.isMinimumAppBarHeight
+                      ? Colors.black
+                      : Colors.transparent,
                   title: Text(provider.isMinimumAppBarHeight ? "Notes" : ""),
                   elevation: 0.0,
                   leading: InkWell(
-                    child: Container(
-                      color: Colors.blue,
-                    ),
-                    onTap: () => context.go(AppRouter.login),
+                    child: const SizedBox(),
+                    onTap: () => context.pop(),
                   ),
                 ),
               ),
