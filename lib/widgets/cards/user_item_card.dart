@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:owwn_coding_challenge/models/user.dart';
-import 'package:owwn_coding_challenge/utils/extensions.dart';
 import 'package:owwn_coding_challenge/utils/colors.dart';
+import 'package:owwn_coding_challenge/utils/extensions.dart';
 import 'package:owwn_coding_challenge/widgets/avatars/user_card_avatar.dart';
 
 enum UserCardPosition { start, middle, last }
@@ -46,14 +46,17 @@ class UserListItemCard extends StatelessWidget {
             children: [
               Padding(
                 padding: const EdgeInsets.only(top: 10),
-                child: Text(
+                child: SizedBox(
+                  width: 300,
+                  child:  Text(
                   user.name!,
                   style: TextStyle(
                     color: AppColors.white,
                     fontSize: 18.0,
                     fontWeight: FontWeight.w400,
+                    overflow: TextOverflow.ellipsis,
                   ),
-                ),
+                ),),
               ),
               Text(
                 user.email ?? 'unknown email',

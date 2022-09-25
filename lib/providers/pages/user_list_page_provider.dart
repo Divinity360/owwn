@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:owwn_coding_challenge/models/user.dart';
 import 'package:owwn_coding_challenge/models/user_list_response.dart';
 import 'package:owwn_coding_challenge/services/api/api_service.dart';
+import 'package:owwn_coding_challenge/utils/helpers.dart';
 
 class UserListPageProvider extends ChangeNotifier {
   bool _loading = false;
@@ -28,16 +29,28 @@ class UserListPageProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  /// Request initial set [Users] lists
   Future init() async {
-    loading = true;
     nestedUsersList.clear();
-    log('nestedUsersList $nestedUsersList');
-    final response = await ApiService.requestUserList(pageIndex);
-    final userListResponse = response.data as UserListResponse;
-    nestedUsersList.add(userListResponse.users!);
-    loading = false;
+    pageIndex = 1;
+    await fetchUsersList();
   }
 
-  /// Request and save auth tokens to secure storage
-  Future onLoginBtnTapped(BuildContext context) async {}
+  /// Fetch users list and update [_nestedUsersList]
+  Future fetchUsersList() async {
+    loading = true;
+    final response = await ApiService.requestUserList(pageIndex);
+    if (response.data != null) {
+      final userListResponse = response.data as UserListResponse;
+      if (userListResponse.users!.isNotEmpty) {
+        nestedUsersList.add(userListResponse.users!);
+        pageIndex += 1;
+      } else {
+        AppHelpers.toastMessage('All users have been fetched!');
+      }
+      loading = false;
+    }
+
+    log('=======LOADING===== $loading');
+  }
 }

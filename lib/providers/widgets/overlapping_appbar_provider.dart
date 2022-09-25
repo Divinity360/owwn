@@ -1,6 +1,9 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
+import 'package:owwn_coding_challenge/providers/pages/user_list_page_provider.dart';
+import 'package:owwn_coding_challenge/utils/router.dart';
+import 'package:provider/provider.dart';
 
 class OverlappingAppBarProvider extends ChangeNotifier {
   /// Maximum appbar height
@@ -18,10 +21,13 @@ class OverlappingAppBarProvider extends ChangeNotifier {
   /// Content ratio parallax
   final double _bodyContentRatioParallax = .9;
 
-  double _appBarHeaderHeight = 480.0;
-
   /// Check for minimum appbar height
   bool _isMinimumAppBarHeight = false;
+
+  final _userListProvider = Provider.of<UserListPageProvider>(
+    navigatorKey.currentContext!,
+    listen: false,
+  );
 
   double get maxAppBarHeight => _maxAppBarHeight;
 
@@ -35,7 +41,6 @@ class OverlappingAppBarProvider extends ChangeNotifier {
 
   bool get isMinimumAppBarHeight => _isMinimumAppBarHeight;
 
-  double get appBarImageHeight => _appBarHeaderHeight;
 
   set isMinimumAppBarHeight(bool value) {
     _isMinimumAppBarHeight = value;
@@ -43,16 +48,13 @@ class OverlappingAppBarProvider extends ChangeNotifier {
   }
 
   /// Calculate appBar header height based on scroll extent value
-  bool onScrollEvent(DraggableScrollableNotification notification) {
-    isMinimumAppBarHeight = notification.extent == _bodyContentRatioMax;
+  bool onScrollEvent(ScrollNotification notification) {
+     isMinimumAppBarHeight = notification.metrics.extentBefore != 0;
 
-    if (notification.extent >= _bodyContentRatioMin) {
-      _appBarHeaderHeight = (_bodyContentRatioMax -
-              ((notification.extent - _bodyContentRatioMin) /
-                  (_bodyContentRatioMax - _bodyContentRatioMin))) *
-          _maxAppBarHeight;
+    if (notification.metrics.pixels == notification.metrics.maxScrollExtent && !_userListProvider.loading) {
+       _userListProvider.fetchUsersList();
     }
-
+    log('==================================== ${notification.metrics.toString()} ${notification.metrics.extentAfter} ${notification.metrics.extentBefore} ${notification.metrics.extentInside} ${notification.metrics.maxScrollExtent} ${notification.metrics.minScrollExtent} ${notification.metrics.atEdge} ${notification.metrics.hasPixels} ${notification.metrics.hasViewportDimension} ${notification.metrics.axis} ${notification.metrics.axisDirection} ${notification.metrics.hasContentDimensions} ${notification.metrics.outOfRange} ${notification.metrics.pixels}');
     notifyListeners();
     return true;
   }

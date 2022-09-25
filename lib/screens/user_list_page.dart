@@ -15,46 +15,45 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      final _userListPageProvider =
-          Provider.of<UserListPageProvider>(context, listen: false);
-      _userListPageProvider.init();
+      Provider.of<UserListPageProvider>(context, listen: false).init();
     });
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: OverlappingAppBarListView(
-        viewChild: LinearGradientBackground(
-          child: Consumer<UserListPageProvider>(
-            builder: (context, provider, child) {
-              return Column(
-                children: [
-                  if (provider.loading == true &&
-                      provider.nestedUsersList.isEmpty)
-                    const Padding(
-                      padding: EdgeInsets.all(100),
-                      child: AppLoader(),
-                    )
-                  else
-                    ListView.builder(
-                      itemCount: provider.nestedUsersList.length,
-                      shrinkWrap: true,
-                      padding: const EdgeInsets.symmetric(vertical: 10),
-                      physics: const NeverScrollableScrollPhysics(),
-                      itemBuilder: (context, index) {
-                        return SectionedUserList(
-                          userList: provider.nestedUsersList.elementAt(index),
-                        );
-                      },
-                    )
-                ],
-              );
-            },
+    return Consumer<UserListPageProvider>(builder: (context, provider, child) {
+      return Scaffold(
+          body: Stack(
+        children: [
+          OverlappingAppBarListView(
+            viewChild: Column(
+              children: [
+                ListView.builder(
+                  itemCount: provider.nestedUsersList.length,
+                  shrinkWrap: true,
+                  padding: const EdgeInsets.only(bottom: 110),
+                  physics: const NeverScrollableScrollPhysics(),
+                  itemBuilder: (context, index) {
+                    return SectionedUserList(
+                      userList: provider.nestedUsersList.elementAt(index),
+                    );
+                  },
+                ),
+              ],
+            ),
           ),
-        ),
-      ),
-    );
+          if (provider.loading == true)
+            Positioned.fill(
+                bottom: 50,
+                child: Align(
+                  alignment: provider.nestedUsersList.isEmpty
+                      ? Alignment.center
+                      : Alignment.bottomCenter,
+                  child: const AppLoader(),
+                ))
+        ],
+      ));
+    });
   }
 }

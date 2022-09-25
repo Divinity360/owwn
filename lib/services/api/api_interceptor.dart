@@ -49,6 +49,7 @@ class ExpiredTokenRetryPolicy extends RetryPolicy {
   /// Request refresh token during retry attempt and navigate to login screen if expired
   @override
   Future<bool> shouldAttemptRetryOnResponse(ResponseData response) async {
+    log('RESPONSE STATUS CODE ${response.statusCode}');
     if (response.statusCode == 401) {
       if (response.url != AppConstants.refreshToken) {
         final response = await ApiService.refreshAuthTokens();

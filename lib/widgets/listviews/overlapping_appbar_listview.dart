@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:owwn_coding_challenge/providers/widgets/overlapping_appbar_provider.dart';
 import 'package:owwn_coding_challenge/utils/router.dart';
+import 'package:owwn_coding_challenge/widgets/backgrounds/linear_gradient_background.dart';
 import 'package:provider/provider.dart';
 
 /// Custom overlapping appbar with child listview
@@ -25,11 +26,11 @@ class OverlappingAppBarListView extends StatelessWidget {
               Stack(children: [
                 Image.network(
                   'http://s3.amazonaws.com/dmaunited/news/19AW_ECOM_MF_SP_Select_KarlLagerfeld_ComingSoonHero_Desktop_1440x500_2-A.jpg?mtime=20191009173305',
-                  height: provider.appBarImageHeight,
+                  height: provider.isMinimumAppBarHeight ? 0 : provider.maxAppBarHeight,
                   width: _screenWidth,
                   fit: BoxFit.cover,
                 ),
-                NotificationListener<DraggableScrollableNotification>(
+                NotificationListener<ScrollNotification>(
                   onNotification: provider.onScrollEvent,
                   child: Stack(
                     children: <Widget>[
@@ -39,10 +40,11 @@ class OverlappingAppBarListView extends StatelessWidget {
                         maxChildSize: provider.bodyContentRatioMax,
                         builder: (BuildContext context,
                             ScrollController scrollController) {
-                          return SingleChildScrollView(
+                          return LinearGradientBackground(
+                              child: SingleChildScrollView(
                             controller: scrollController,
                             child: viewChild,
-                          );
+                          ));
                         },
                       ),
                     ],
@@ -57,7 +59,7 @@ class OverlappingAppBarListView extends StatelessWidget {
                   backgroundColor: provider.isMinimumAppBarHeight
                       ? Colors.black
                       : Colors.transparent,
-                  title: Text(provider.isMinimumAppBarHeight ? "Notes" : ""),
+                  title: Text(provider.isMinimumAppBarHeight ? "Users" : ""),
                   elevation: 0.0,
                   leading: InkWell(
                     child: const SizedBox(),

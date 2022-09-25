@@ -8,11 +8,10 @@ class AppLoader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-        child: SizedBox(
+    return  SizedBox(
           width: 30,
           height: 30,
           child: CircularProgressIndicator(backgroundColor: AppColors.white),
-        ));
+        );
   }
 }

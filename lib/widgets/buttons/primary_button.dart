@@ -19,7 +19,7 @@ class PrimaryButton extends StatelessWidget {
       width: MediaQuery.of(context).size.width,
       height: 69,
       child: isLoading
-          ? const AppLoader()
+          ? const Center(child: AppLoader(),)
           : TextButton(
               onPressed: onTap,
               style: TextButton.styleFrom(
