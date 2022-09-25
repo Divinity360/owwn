@@ -4,7 +4,7 @@ enum Status { active, inactive }
 
 class Users {
   String? id;
-  int? parentIndex;
+  int? pageIndex;
   String? name;
   String? email;
   Gender? gender;
@@ -15,7 +15,7 @@ class Users {
 
   Users({
     this.id,
-    this.parentIndex,
+    this.pageIndex,
     this.name,
     this.email,
     this.gender,
@@ -27,7 +27,7 @@ class Users {
 
   Users copyWith({
     String? id,
-    int? parentIndex,
+    int? pageIndex,
     String? name,
     String? email,
     Gender? gender,
@@ -40,7 +40,7 @@ class Users {
       id: id ?? this.id,
       name: name ?? this.name,
       email: email ?? this.email,
-      parentIndex: parentIndex ?? this.parentIndex,
+      pageIndex: pageIndex ?? this.pageIndex,
       gender: gender ?? this.gender,
       status: status ?? this.status,
       partnerId: partnerId ?? this.partnerId,
@@ -52,8 +52,8 @@ class Users {
   Users.fromJson(Map<String, dynamic> json) {
     id = json['id'] as String;
     name = json['name'] as String;
-    if (json['parentIndex'] != null) {
-      parentIndex = json['parentIndex'] as int;
+    if (json['pageIndex'] != null) {
+      pageIndex = json['pageIndex'] as int;
     }
     if (json['email'] != null) {
       email = json['email'] as String;

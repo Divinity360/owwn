@@ -66,7 +66,7 @@ class UserListPageProvider extends ChangeNotifier {
     log(parentIndex.toString());
     context.push(
       AppRouter.userDetail,
-      extra: user.copyWith(parentIndex: parentIndex),
+      extra: user.copyWith(pageIndex: parentIndex),
     );
   }
 }

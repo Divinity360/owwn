@@ -77,16 +77,16 @@ class UserDetailPageProvider extends ChangeNotifier {
 
   /// Update user list with updated fields
   void onSaveTap(BuildContext context) {
-    final pageIndexedUserList =
-        _userListProvider.nestedUsersList[user!.parentIndex!];
-    if (isUserNameEdited) {
-      pageIndexedUserList[_getUserIndex(pageIndexedUserList)] =
-          user!.copyWith(name: nameController.text);
-    }
-    if (isUserEmailEdited) {
-      pageIndexedUserList[_getUserIndex(pageIndexedUserList)] =
-          user!.copyWith(email: emailController.text);
-    }
-    context.pop();
+      final pageIndexedUserList =
+          _userListProvider.nestedUsersList[user!.pageIndex!];
+      final userIndex = _getUserIndex(pageIndexedUserList);
+      if (isUserNameEdited) {
+        pageIndexedUserList[userIndex].name = nameController.text;
+      }
+      if (isUserEmailEdited) {
+        pageIndexedUserList[userIndex].email = emailController.text;
+      }
+      context.pop();
+
   }
 }

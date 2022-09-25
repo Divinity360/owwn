@@ -61,10 +61,6 @@ class OverlappingAppBarListView extends StatelessWidget {
                       : Colors.transparent,
                   title: Text(provider.isMinimumAppBarHeight ? "Users" : ""),
                   elevation: 0.0,
-                  leading: InkWell(
-                    child: const SizedBox(),
-                    onTap: () => context.pop(),
-                  ),
                 ),
               ),
             ],
