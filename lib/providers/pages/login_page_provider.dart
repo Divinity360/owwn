@@ -26,7 +26,7 @@ class LoginPageProvider extends ChangeNotifier {
       final authResponse = response.data as AuthResponse;
       await AppSecureStorage.saveAccessToken(authResponse.accessToken!);
       await AppSecureStorage.saveRefreshToken(authResponse.refreshToken!);
-      router.push(AppRouter.home);
+      router.push(AppRouter.users);
     } else {
       AppHelpers.toastMessage('Invalid login credentials');
     }

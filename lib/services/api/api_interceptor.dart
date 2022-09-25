@@ -1,12 +1,10 @@
 import 'dart:developer';
 
-import 'package:go_router/go_router.dart';
 import 'package:http_interceptor/http_interceptor.dart';
-import 'package:owwn_coding_challenge/models/auth_response.dart';
-import 'package:owwn_coding_challenge/services/api/api_service.dart';
+import 'package:owwn_coding_challenge/services/api/api_retry_policy.dart';
 import 'package:owwn_coding_challenge/services/storage/storage_service.dart';
 import 'package:owwn_coding_challenge/utils/constants.dart';
-import 'package:owwn_coding_challenge/utils/router.dart';
+
 
 /// API Service interceptor class
 class ApiInterceptor implements InterceptorContract {
@@ -35,32 +33,10 @@ class ApiInterceptor implements InterceptorContract {
 
   @override
   Future<ResponseData> interceptResponse({required ResponseData data}) async {
-    log('RESPONSE DATA $data');
-    return data;
-  }
-}
-
-/// API Service retry policy
-class ExpiredTokenRetryPolicy extends RetryPolicy {
-  ///Maximum number of retry attempts
-  @override
-  int maxRetryAttempts = 2;
-
-  /// Request refresh token during retry attempt and navigate to login screen if expired
-  @override
-  Future<bool> shouldAttemptRetryOnResponse(ResponseData response) async {
-    log('RESPONSE STATUS CODE ${response.statusCode}');
-    if (response.statusCode == 401) {
-      if (response.url != AppConstants.refreshToken) {
-        final response = await ApiService.refreshAuthTokens();
-        final authResponse = response.data as AuthResponse;
-        AppSecureStorage.saveAccessToken(authResponse.accessToken!);
-        AppSecureStorage.saveRefreshToken(authResponse.refreshToken!);
-      } else {
-        navigatorKey.currentContext!.go(AppRouter.login);
-      }
-      return true;
+    log('RESPONSE DATA ${data.toString()}');
+    if (data.statusCode == 401) {
+      await handleUnAuthorizedServerResponse(data);
     }
-    return false;
+    return data;
   }
 }

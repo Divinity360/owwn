@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:owwn_coding_challenge/providers/pages/login_page_provider.dart';
+import 'package:owwn_coding_challenge/providers/pages/user_detail_page_provider.dart';
 import 'package:owwn_coding_challenge/providers/pages/user_list_page_provider.dart';
 import 'package:owwn_coding_challenge/providers/widgets/overlapping_appbar_provider.dart';
 import 'package:provider/provider.dart';

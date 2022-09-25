@@ -1,10 +1,16 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:owwn_coding_challenge/models/user.dart';
 import 'package:owwn_coding_challenge/models/user_list_response.dart';
+import 'package:owwn_coding_challenge/providers/pages/user_detail_page_provider.dart';
+import 'package:owwn_coding_challenge/screens/user_detail_page.dart';
 import 'package:owwn_coding_challenge/services/api/api_service.dart';
+import 'package:owwn_coding_challenge/utils/constants.dart';
 import 'package:owwn_coding_challenge/utils/helpers.dart';
+import 'package:owwn_coding_challenge/utils/router.dart';
+import 'package:provider/provider.dart';
 
 class UserListPageProvider extends ChangeNotifier {
   bool _loading = false;
@@ -50,7 +56,17 @@ class UserListPageProvider extends ChangeNotifier {
       }
       loading = false;
     }
+  }
 
-    log('=======LOADING===== $loading');
+  void onUserTap(
+    BuildContext context, {
+    required int parentIndex,
+    required Users user,
+  }) {
+    log(parentIndex.toString());
+    context.push(
+      AppRouter.userDetail,
+      extra: user.copyWith(parentIndex: parentIndex),
+    );
   }
 }
