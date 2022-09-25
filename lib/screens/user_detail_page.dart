@@ -66,7 +66,7 @@ class _UserDetailPageState extends State<UserDetailPage> {
                         padding: const EdgeInsets.only(top: 40),
                         child: PrimaryButton(
                           text: 'SAVE',
-                          onTap: provider.onSaveTap,
+                          onTap: () => provider.onSaveTap(context),
                         ),
                       )
                   ],

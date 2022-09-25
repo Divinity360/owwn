@@ -1,6 +1,5 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:owwn_coding_challenge/models/user.dart';
 import 'package:owwn_coding_challenge/providers/pages/user_list_page_provider.dart';
 import 'package:owwn_coding_challenge/utils/router.dart';
@@ -72,9 +71,22 @@ class UserDetailPageProvider extends ChangeNotifier {
   /// Update user email was edited
   void onEmailChanged(String text) => isUserEmailEdited = true;
 
-  void onSaveTap(){
-    if (isUserNameEdited){
-      log(_userListProvider.nestedUsersList[user!.parentIndex!].toString());
+  /// Retrieve user model index from user list
+  int _getUserIndex(List<Users> userList) =>
+      userList.indexWhere((element) => element.id == user!.id);
+
+  /// Update user list with updated fields
+  void onSaveTap(BuildContext context) {
+    final pageIndexedUserList =
+        _userListProvider.nestedUsersList[user!.parentIndex!];
+    if (isUserNameEdited) {
+      pageIndexedUserList[_getUserIndex(pageIndexedUserList)] =
+          user!.copyWith(name: nameController.text);
     }
+    if (isUserEmailEdited) {
+      pageIndexedUserList[_getUserIndex(pageIndexedUserList)] =
+          user!.copyWith(email: emailController.text);
+    }
+    context.pop();
   }
 }
